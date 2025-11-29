@@ -2,30 +2,39 @@
 
 A LangGraph-based deep research agent that plans queries, searches the web via Tavily, and generates structured, source-grounded research reports. Includes a lightweight evaluation suite with both heuristic checks and LLM-as-a-judge scoring.
 
+---
+
 ## 🚀 Quickstart (Fastest Way to Run)
+
 ```bash
 git clone https://github.com/<your-username>/ai-deep-research-agent.git
 cd ai-deep-research-agent
 pip install -r requirements.txt
 python deep_research.py
 ```
-Add your .env file and you're fully set.
+
+Create your `.env` file:
+
 ```ini
 OPENAI_API_KEY=your_openai_key_here
 TAVILY_API_KEY=your_tavily_key_here
 ```
 
+---
+
 ## Overview
 
 This project implements a deep research agent that:
 
-- Accepts a natural-language query from the user  
+- Accepts a natural-language query  
 - Plans and executes web searches using Tavily  
 - Uses LangGraph to coordinate tool usage and reasoning steps  
 - Generates a structured, multi-section research report grounded in retrieved sources  
-- Provides evaluation scripts to assess structure, grounding, and quality using both heuristics and an LLM judge  
+- Includes evaluation tools (heuristics + LLM-as-a-judge)  
 
-The agent runs entirely in the command line and requires no frontend.
+Runs fully in the command line — no frontend required.
+
+---
 
 ## Features
 
@@ -34,7 +43,7 @@ The agent runs entirely in the command line and requires no frontend.
 - Web search retrieval  
 - Report generation  
 
-### Structured Output
+### Structured Output  
 1. Executive Summary  
 2. Key Findings  
 3. Analysis / Discussion  
@@ -43,104 +52,104 @@ The agent runs entirely in the command line and requires no frontend.
 
 ### Additional Capabilities
 - Automatic citation indexing (e.g., [1], [2], [3])  
-- Evaluation suite including:  
-  - Structure checks  
-  - Grounding checks  
-  - LLM-as-a-Judge (1–5 scoring rubric)  
-- Support for multiple research queries per session  
+- Structure & grounding checks  
+- LLM-as-a-Judge scoring (1–5)  
+- Support for multiple queries per session  
+
+---
 
 ## Requirements
 
 - Python 3.12+  
-- OPENAI_API_KEY  
-- TAVILY_API_KEY  
+- `OPENAI_API_KEY`  
+- `TAVILY_API_KEY`  
 
 Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
+
+---
+
 ## Setup
 
 ### 1. Clone the repository
+
 ```bash
 git clone https://github.com/<your-username>/ai-deep-research-agent.git
 cd ai-deep-research-agent
 ```
 
-### 2. Create a `.env` file in the project root
+### 2. Add a `.env` file
+
 ```ini
 OPENAI_API_KEY=your_openai_key_here
 TAVILY_API_KEY=your_tavily_key_here
 ```
 
-### 3. (Optional but recommended) Create and activate a virtual environment
-
-Create the venv:
+### 3. (Optional) Create a virtual environment
 
 ```bash
-
 python -m venv .venv
-
 ```
 
+Windows:
 
-Activate it (Windows):
 ```bash
 .\.venv\Scripts\activate
+```
 
+Mac/Linux:
 
-Activate it (Mac/Linux):
-
+```bash
 source .venv/bin/activate
-
 ```
 
 ### 4. Install dependencies
+
 ```bash
 pip install -r requirements.txt
-
 ```
 
-### Usage
-Run the deep research agent
+---
+
+## Usage
+
+### Run the research agent
+
 ```bash
 python deep_research.py
 ```
 
-## You will be prompted:
-
-Enter your research query:
-
-```ini
 Example queries:
 
-What are the biggest safety challenges facing autonomous vehicles?
+- What are the biggest safety challenges facing autonomous vehicles?  
+- How is GenAI transforming early-stage startups?  
+- What are the environmental risks of large-scale data centers?  
+- How do LLMs impact cybersecurity in enterprise systems?  
 
-How is GenAI transforming early-stage startups?
+Outputs a full structured research report.
 
-What are the environmental risks of large-scale data centers?
+---
 
-How do LLMs impact cybersecurity in enterprise systems?
+### Run the evaluation tool
 
-The agent will output a full structured report.
-
-Run the evaluation tool
+```bash
 python evals.py
-
-
-Evaluations produce:
-
-A generated research report
-
-Structure and grounding checks
-
-LLM-as-a-judge scoring (1–5 with justification)
-
-Ability to run multiple eval queries in one session
 ```
 
-### Project Structure
+Evaluations include:
+
+- Generated research report  
+- Structure & grounding checks  
+- LLM-as-a-judge scoring (1–5 with justification)  
+- Ability to evaluate multiple queries  
+
+---
+
+## Project Structure
+
 ```
 ai-deep-research-agent/
 │
@@ -151,26 +160,17 @@ ai-deep-research-agent/
 ├── .gitignore              # Keeps venv and secrets out of GitHub
 └── README.md               # Project documentation
 ```
-### Notes
 
-The .env file is ignored via .gitignore.
+---
 
-No secrets or virtual environment folders are tracked.
+## Notes
 
-All code is written to be readable, transparent, and simple to run.
+- `.env` is ignored via `.gitignore`  
+- No secrets or venv folders are tracked  
+- Code is simple, transparent, and easy to run  
 
-Optional Extensions
+---
 
-Configurable number of search calls
-
-Configurable report structure
-
-Support for other search APIs (SerpAPI, Exa, etc.)
-
-Support for different LLMs
-
-Add streaming or step-by-step reasoning outputs
-
-License
+## License
 
 MIT License.
