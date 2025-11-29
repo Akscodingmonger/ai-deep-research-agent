@@ -46,7 +46,6 @@ Install dependencies:
 
 ```bash
 pip install -r requirements.txt
-```  <!-- THIS WAS MISSING — now your block closes correctly -->
 ```
 ## Setup
 
@@ -129,6 +128,7 @@ Ability to run multiple eval queries in one session
 ```
 
 ### Project Structure
+```
 ai-deep-research-agent/
 │
 ├── deep_research.py        # LangGraph agent and report generator
@@ -137,7 +137,7 @@ ai-deep-research-agent/
 ├── .env                    # API keys (ignored by Git)
 ├── .gitignore              # Keeps venv and secrets out of GitHub
 └── README.md               # Project documentation
-
+```
 ### Notes
 
 The .env file is ignored via .gitignore.
