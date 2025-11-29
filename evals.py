@@ -3,7 +3,7 @@ import json
 from typing import Dict, Any
 
 from langchain_openai import ChatOpenAI
-from deep_research import run_research
+from deep_research import run_research, AgentConfig, DEFAULT_MODEL, DEFAULT_NUM_SEARCHES
 
 
 def eval_structure(report: str) -> Dict[str, bool]:
@@ -45,7 +45,7 @@ judge_llm = ChatOpenAI(
 def _extract_json(text: str) -> Dict[str, Any]:
     match = re.search(r"\{.*\}", text, re.DOTALL)
     if not match:
-        raise ValueError("No JSON object found in judge output.")
+        raise ValueError("No JSON found.")
     return json.loads(match.group(0))
 
 
@@ -61,13 +61,7 @@ Report:
 \"\"\"{report}\"\"\"
 
 
-Follow these steps internally:
-1. Determine how well the report answers the user query.
-2. Check whether statements appear grounded in cited sources.
-3. Assess depth of analysis beyond surface-level summary.
-4. Evaluate clarity, readability, and structure.
-
-Then output only a JSON object, with no extra text, using this schema:
+Output only a JSON object with this schema:
 
 {{
   "relevance": <int 1-5>,
@@ -77,26 +71,21 @@ Then output only a JSON object, with no extra text, using this schema:
   "justification": "<2-4 concise sentences>"
 }}
 """
-
     resp = judge_llm.invoke(prompt)
     try:
         data = _extract_json(resp.content)
-
         relevance = float(data.get("relevance", 1))
         grounding = float(data.get("grounding", 1))
         analysis_depth = float(data.get("analysis_depth", 1))
         clarity = float(data.get("clarity", 1))
-
         overall = (relevance + grounding + analysis_depth + clarity) / 4.0
-
         data["relevance"] = relevance
         data["grounding"] = grounding
         data["analysis_depth"] = analysis_depth
         data["clarity"] = clarity
         data["overall"] = overall
-
         if "justification" not in data:
-            data["justification"] = "No justification provided by judge."
+            data["justification"] = "No justification provided."
     except Exception:
         data = {
             "relevance": 1.0,
@@ -104,13 +93,18 @@ Then output only a JSON object, with no extra text, using this schema:
             "analysis_depth": 1.0,
             "clarity": 1.0,
             "overall": 1.0,
-            "justification": "Failed to parse judge output as JSON.",
+            "justification": "Failed to parse JSON.",
         }
     return data
 
 
 def run_all_evals(query: str) -> Dict[str, Any]:
-    report = run_research(query)
+    config = AgentConfig(
+        model=DEFAULT_MODEL,
+        num_searches=DEFAULT_NUM_SEARCHES,
+        system_prompt=None
+    )
+    report = run_research(query, config)
     structure = eval_structure(report)
     grounding = eval_grounding(report, query)
     llm_scores = llm_judge_report(report, query)
@@ -124,7 +118,7 @@ def run_all_evals(query: str) -> Dict[str, Any]:
 
 
 if __name__ == "__main__":
-    print("Enter queries to evaluate (press Enter on an empty line or type 'exit' to quit).")
+    print("Enter queries to evaluate (empty line or 'exit' to quit).")
     while True:
         user_query = input("\nQuery: ").strip()
         if not user_query or user_query.lower() in {"exit", "quit"}:
@@ -141,7 +135,7 @@ if __name__ == "__main__":
         for k, v in results["grounding_checks"].items():
             print(f"{k}: {v}")
 
-        print("\n=== LLM-as-a-Judge Scores (scale: 1 = very poor, 5 = excellent) ===")
+        print("\n=== LLM Judge Scores ===")
         for k, v in results["llm_judge"].items():
             print(f"{k}: {v}")
 
