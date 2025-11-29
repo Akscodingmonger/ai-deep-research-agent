@@ -4,7 +4,7 @@ A LangGraph-based deep research agent that plans queries, searches the web via T
 
 ---
 
-## 🚀 Quickstart (Fastest Way to Run)
+## Quickstart (Fastest Way to Run)
 
 ```bash
 git clone https://github.com/<your-username>/ai-deep-research-agent.git
