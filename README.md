@@ -10,7 +10,8 @@ A LangGraph-based deep research agent that plans queries, searches the web via T
 git clone https://github.com/<your-username>/ai-deep-research-agent.git
 cd ai-deep-research-agent
 pip install -r requirements.txt
-python deep_research.py
+python deep_research.py # for the agent
+python evals.py  # for the evals
 ```
 
 Create your `.env` file:
