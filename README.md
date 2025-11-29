@@ -2,6 +2,19 @@
 
 A LangGraph-based deep research agent that plans queries, searches the web via Tavily, and generates structured, source-grounded research reports. Includes a lightweight evaluation suite with both heuristic checks and LLM-as-a-judge scoring.
 
+## 🚀 Quickstart (Fastest Way to Run)
+```bash
+git clone https://github.com/<your-username>/ai-deep-research-agent.git
+cd ai-deep-research-agent
+pip install -r requirements.txt
+python deep_research.py
+```
+Add your .env file and you're fully set.
+```ini
+OPENAI_API_KEY=your_openai_key_here
+TAVILY_API_KEY=your_tavily_key_here
+```
+
 ## Overview
 
 This project implements a deep research agent that:
