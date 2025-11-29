@@ -132,7 +132,7 @@ Example queries:
 
 ---
 
-## ⚙️ Advanced Usage (Configurable Agent)
+## Advanced Usage (Configurable Agent)
 
 You can override the model, number of searches, or system prompt from the command line.
 
